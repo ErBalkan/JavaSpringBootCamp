@@ -1,4 +1,4 @@
-package com.erbalkan.rentAcar.dataAccess.abstracts.concretes;
+package com.erbalkan.rentAcar.dataAccess.abstracts;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

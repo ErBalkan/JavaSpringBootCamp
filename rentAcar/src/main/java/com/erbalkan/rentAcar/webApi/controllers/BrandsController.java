@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.erbalkan.rentAcar.business.abstracts.BrandService;
-import com.erbalkan.rentAcar.entities.concretes.Brand;
 
 @RestController // api olduğunu bildirir.
 @RequestMapping("/api/brands") // apiye erişim adresini bildirir.
