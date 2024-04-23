@@ -1,2 +1,2 @@
 # JavaSpringBootCamp
-Folksdev eğitimi
+Engin Demiroğ java kursu
