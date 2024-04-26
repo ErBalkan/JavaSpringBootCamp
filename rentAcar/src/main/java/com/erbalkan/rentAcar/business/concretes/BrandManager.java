@@ -1,10 +1,11 @@
 package com.erbalkan.rentAcar.business.concretes;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.erbalkan.rentAcar.business.requests.CreateBrandRequest;
+import com.erbalkan.rentAcar.business.requests.UpdateBrandRequest;
 import com.erbalkan.rentAcar.business.responses.GetAllBrandsResponse;
+import com.erbalkan.rentAcar.business.responses.GetByIdBrandResponse;
 import com.erbalkan.rentAcar.core.utilities.mappers.ModelMapperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,16 +29,22 @@ public class BrandManager implements BrandService {
     @Override
     public List<GetAllBrandsResponse> getAll() {
         List<Brand> brands = _brandRepository.findAll();
-        List<GetAllBrandsResponse> brandsResponses = new ArrayList<GetAllBrandsResponse>();
-        for (Brand brand : brands){
-            GetAllBrandsResponse responseItem = new GetAllBrandsResponse();
-            responseItem.setId(brand.getId());
-            responseItem.setName(brand.getName());
-            brandsResponses.add(responseItem);
-        }
+//        List<GetAllBrandsResponse> brandsResponses = new ArrayList<GetAllBrandsResponse>();
+//        for (Brand brand : brands){
+//            GetAllBrandsResponse responseItem = new GetAllBrandsResponse();
+//            responseItem.setId(brand.getId());
+//            responseItem.setName(brand.getName());
+//            brandsResponses.add(responseItem);
+//        }
 
+        return brands.stream().map(brand -> this._modelMapperService.forResponse().map(brand,GetAllBrandsResponse.class)).toList();
 
-        return brandsResponses;
+    }
+
+    @Override
+    public GetByIdBrandResponse getById(int id) {
+        Brand brand = this._brandRepository.findById(id).orElseThrow();
+        return this._modelMapperService.forResponse().map(brand,GetByIdBrandResponse.class);
     }
 
     @Override
@@ -48,6 +55,17 @@ public class BrandManager implements BrandService {
         Brand brand = this._modelMapperService.forRequest().map(createBrandRequest, Brand.class);
         // Bir brand nesnesi oluşturduk daha sonra mapperi kullanarak createBrandRequest nesnesini Brand nesnesine map ettik.
         this._brandRepository.save(brand);
+    }
+
+    @Override
+    public void update(UpdateBrandRequest updateBrandRequest) {
+        Brand brand = this._modelMapperService.forRequest().map(updateBrandRequest, Brand.class);
+        this._brandRepository.save(brand); // id'de istediğimiz için save metodu update yapmış olacak.
+    }
+
+    @Override
+    public void delete(int id) {
+        this._brandRepository.deleteById(id);
     }
 
 }
