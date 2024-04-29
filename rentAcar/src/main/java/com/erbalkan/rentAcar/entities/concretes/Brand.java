@@ -1,15 +1,12 @@
 package com.erbalkan.rentAcar.entities.concretes;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Table(name = "brands") // bu sınıf dbdeki brands tablosuna gelecek 
 // @Data // getter ve setter'ları ve parametresiz constructoru oto oluşturur(lombok)
@@ -27,6 +24,9 @@ public class Brand {
     private int id;
     @Column(name = "name")
     private String name;
+    @OneToMany(mappedBy = "brand") // Bire çok ilişki - mappedby-> brand ile ilişkili olduğunu belirttik
+    private List<Model> models;
+
 
     // public int getId() {
     //     return id;
